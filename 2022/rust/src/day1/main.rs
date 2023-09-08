@@ -5,21 +5,30 @@ fn main() {
 
     let lines = input.lines();
 
-    let mut result = 0;
-
     let mut sum = 0;
+
+    let mut sums: Vec<usize> = Vec::new();
 
     for line in lines {
         match line.trim() {
             "" => {
-                if sum > result {
-                    result = sum;
-                }
+                sums.push(sum);
                 sum = 0;
             }
             s => sum += s.parse::<usize>().unwrap(),
         }
     }
+    sums.push(sum);
 
+    sums.sort();
+    sums.reverse();
+    let mut total_top3 = 0;
+
+    for i in 0..3 {
+        total_top3 += sums[i];
+    }
+
+    let result = sums[0];
     println!("Result : {result}");
+    println!("Result top 3: {total_top3}");
 }
