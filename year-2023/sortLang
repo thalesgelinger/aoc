@@ -1,0 +1,6 @@
+#!/bin/bash
+
+langs=("kotlin" "swift" "rust" "go")
+random=$(shuf -i 0-3 -n 1)
+
+echo ${langs[random]}
