@@ -4,8 +4,6 @@ let data = FileManager.default.contents(atPath: "input2.txt")!
 let fileContents = String(data: data, encoding: .utf8)!
 let lines = fileContents.split(separator: "\n")
 
-let digits = try Regex("[0-9]")
-
 let digitsMap = [
     "one": 1, 
     "two": 2, 
@@ -18,8 +16,7 @@ let digitsMap = [
     "nine": 9
 ]
 
-let response = try lines.map { l in
-    var line = String(l)
+let response = lines.map { l in
     var head = "";
     var tail = "";
     var left = "";
@@ -49,7 +46,6 @@ let response = try lines.map { l in
             for (d, v) in digitsMap {
                 if tail.contains(d) {
                     right = String(v)
-                    break
                 }
             }
         }
@@ -60,9 +56,6 @@ let response = try lines.map { l in
 
 
     }
-
-    print("Val: \(left)\(right)")
-
     return Int("\(left)\(right)")!
 }.reduce(0) { (acc, el) in acc + el}
 

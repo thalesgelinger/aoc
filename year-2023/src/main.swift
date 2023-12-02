@@ -61,8 +61,6 @@ let response = try lines.map { l in
 
     }
 
-    print("Val: \(left)\(right)")
-
     return Int("\(left)\(right)")!
 }.reduce(0) { (acc, el) in acc + el}
 
