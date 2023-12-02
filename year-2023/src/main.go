@@ -9,13 +9,9 @@ import (
 )
 
 func main() {
-	file, _ := os.ReadFile("input.txt")
+	file, _ := os.ReadFile("input2.txt")
 	content := string(file)
-
-	redMax, greenMax, blueMax := 12, 13, 14
-
 	lines := strings.Split(content, "\n")
-
 	lines = lines[:len(lines)-1]
 
 	semiCommaComma := regexp.MustCompile(`;|,`)
@@ -26,7 +22,8 @@ func main() {
 		gameSplitted := strings.Split(line, ":")
 
 		gameColorSet := semiCommaComma.Split(gameSplitted[1], -1)
-		isSetValid := true
+
+		redMax, greenMax, blueMax := 0, 0, 0
 
 		for _, gameColorSet := range gameColorSet {
 			colorAndValue := strings.Split(gameColorSet, " ")
@@ -37,31 +34,23 @@ func main() {
 			switch color {
 			case "red":
 				if value > redMax {
-					isSetValid = false
+					redMax = value
 				}
 				break
 			case "blue":
 				if value > blueMax {
-					isSetValid = false
+					blueMax = value
 				}
 				break
 			case "green":
 				if value > greenMax {
-					isSetValid = false
+					greenMax = value
 				}
 				break
 			}
-
-			if !isSetValid {
-				break
-			}
 		}
-
-		if isSetValid {
-			gameIdAsString := strings.Split(gameSplitted[0], " ")[1]
-			gameId, _ := strconv.Atoi(gameIdAsString)
-			response += gameId
-		}
+		valueSetted := redMax * blueMax * greenMax
+		response += valueSetted
 	}
 
 	fmt.Println("Response: ", response)
