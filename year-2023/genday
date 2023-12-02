@@ -1,0 +1,12 @@
+#!/bin/bash
+
+daynumber=$1
+
+if [ -z "$daynumber" ]; then 
+    echo "Tu nao informou o dia seu animal"; 
+    exit
+fi
+
+dayfolder="day$daynumber"
+
+mkdir $dayfolder && cp template/* $dayfolder
