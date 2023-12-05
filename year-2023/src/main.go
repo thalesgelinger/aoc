@@ -3,55 +3,60 @@ package main
 import (
 	"fmt"
 	"os"
-	"regexp"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
+func toInt(str string) int {
+	val, _ := strconv.Atoi(str)
+	return val
+}
+
 func main() {
-	file, _ := os.ReadFile("input2.txt")
+	file, _ := os.ReadFile("input.txt")
 	content := string(file)
 	lines := strings.Split(content, "\n")
-	lines = lines[:len(lines)-1]
+	head, tail := lines[0], lines[1:]
 
-	semiCommaComma := regexp.MustCompile(`;|,`)
+	seedsStr := strings.Split(strings.Split(head, ":")[1], " ")
 
-	response := 0
+	var seeds []int
 
-	for _, line := range lines {
-		gameSplitted := strings.Split(line, ":")
-
-		gameColorSet := semiCommaComma.Split(gameSplitted[1], -1)
-
-		redMax, greenMax, blueMax := 0, 0, 0
-
-		for _, gameColorSet := range gameColorSet {
-			colorAndValue := strings.Split(gameColorSet, " ")
-			// FIXME: i should not start with 1, missing trim
-			valueAsString, color := colorAndValue[1], colorAndValue[2]
-			value, _ := strconv.Atoi(valueAsString)
-
-			switch color {
-			case "red":
-				if value > redMax {
-					redMax = value
-				}
-				break
-			case "blue":
-				if value > blueMax {
-					blueMax = value
-				}
-				break
-			case "green":
-				if value > greenMax {
-					greenMax = value
-				}
-				break
-			}
+	for _, v := range seedsStr {
+		if v != "" {
+			seeds = append(seeds, toInt(strings.TrimSpace(v)))
 		}
-		valueSetted := redMax * blueMax * greenMax
-		response += valueSetted
 	}
 
-	fmt.Println("Response: ", response)
+	result := -1
+
+	for _, seed := range seeds {
+		seedDestination := seed
+		hasUpdated := false
+		for _, line := range tail {
+			if line != "" && unicode.IsDigit(rune(line[0])) {
+				splitedValues := strings.Split(line, " ")
+				destination, source, rangeLength := toInt(splitedValues[0]), toInt(splitedValues[1]), toInt(splitedValues[2])
+
+				if source <= seedDestination && seedDestination < (source+rangeLength) && !hasUpdated {
+					seedDestination = seedDestination - source + destination
+					hasUpdated = true
+				}
+
+			} else {
+				hasUpdated = false
+			}
+
+		}
+		if result < 0 {
+			result = seedDestination
+		} else {
+			if result > seedDestination {
+				result = seedDestination
+			}
+		}
+	}
+
+		fmt.Println("Location Lowest: ", result)
 }
