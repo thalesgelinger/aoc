@@ -1,0 +1,16 @@
+{
+    "name": "ts",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "day1": "tsx day1.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^20.14.6",
+        "tsx": "^4.15.6"
+    }
+}
