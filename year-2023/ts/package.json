@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "day1": "tsx day1.ts"
+        "day": "tsx run-day.ts"
     },
     "keywords": [],
     "author": "",
