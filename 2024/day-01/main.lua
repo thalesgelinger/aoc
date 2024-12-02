@@ -1,6 +1,5 @@
 os.execute "clear"
 local aoc = require "aoc"
-
 local lines = aoc.lines_from "input.txt"
 
 local left, right = {}, {}
@@ -21,13 +20,23 @@ for _, v in ipairs(lines) do
     table.insert(right, rn)
 end
 
-table.sort(left)
-table.sort(right)
+
+local appears = {}
+
+for _, v in ipairs(right) do
+    if appears[v] then
+        appears[v] = appears[v] + 1
+    else
+        appears[v] = 1
+    end
+end
 
 local result = 0
 
-for k, v in ipairs(left) do
-    result = result + math.abs(v - right[k])
+for _, v in ipairs(left) do
+    if appears[v] then
+        result = result + v * appears[v]
+    end
 end
 
 print(result)
