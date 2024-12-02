@@ -7,7 +7,11 @@ local function file_exists(file)
 end
 
 function M.lines_from(file)
-    if not file_exists(file) then return {} end
+    print("INPUT: " .. file)
+    if not file_exists(file) then
+        error("Missing input file to read line")
+        return {}
+    end
     local lines = {}
     for line in io.lines(file) do
         lines[#lines + 1] = line
