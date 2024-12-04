@@ -2,7 +2,7 @@ os.execute "clear"
 require "strings"
 
 local utils = require "utils"
-local lines = utils.lines_from "day-01/example.txt"
+local lines = utils.linesFrom "input/01/example.txt"
 
 local left, right = {}, {}
 

@@ -5,4 +5,4 @@ if day == nil then
     error "Please inform a day"
 end
 
-require("day-" .. day .. "/main")
+require("days." .. day)

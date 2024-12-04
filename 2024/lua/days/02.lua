@@ -3,7 +3,7 @@ local utils = require "utils"
 
 os.execute "clear"
 
-local lines = utils.linesFrom "day-02/input.txt"
+local lines = utils.linesFrom "input/02/input.txt"
 
 local result = 0
 
