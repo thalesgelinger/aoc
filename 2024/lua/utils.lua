@@ -6,7 +6,7 @@ local function file_exists(file)
     return f ~= nil
 end
 
-function M.lines_from(file)
+function M.linesFrom(file)
     print("INPUT: " .. file)
     if not file_exists(file) then
         error("Missing input file to read line")
@@ -17,6 +17,18 @@ function M.lines_from(file)
         lines[#lines + 1] = line
     end
     return lines
+end
+
+function M.printList(t)
+    local str = "["
+    for index, value in ipairs(t) do
+        str = str .. value
+        if index ~= #t then
+            str = str .. ","
+        end
+    end
+    str = str .. "]"
+    print(str)
 end
 
 return M
