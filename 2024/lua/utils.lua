@@ -19,6 +19,15 @@ function M.linesFrom(file)
     return lines
 end
 
+function M.printHash(t)
+    for k, v in ipairs(t) do
+        print("K: " .. k, "V: " .. v)
+        if type(v) == "table" then
+            M.printHash(v)
+        end
+    end
+end
+
 function M.printList(t)
     local str = "["
     for index, value in ipairs(t) do
