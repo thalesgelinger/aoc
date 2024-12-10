@@ -20,23 +20,24 @@ function M.linesFrom(file)
 end
 
 function M.printHash(t)
-    for k, v in ipairs(t) do
-        print("K: " .. k, "V: " .. v)
-        if type(v) == "table" then
-            M.printHash(v)
-        end
+    local str = "{ "
+    local delimiter = ", "
+    for k, v in pairs(t) do
+        str = str .. k .. " = " .. v .. delimiter
     end
+    str = str:sub(1, #str - #delimiter) .. " }"
+    print(str)
 end
 
 function M.printList(t)
-    local str = "["
+    local str = "{"
     for index, value in ipairs(t) do
         str = str .. value
         if index ~= #t then
             str = str .. ","
         end
     end
-    str = str .. "]"
+    str = str .. "}"
     print(str)
 end
 

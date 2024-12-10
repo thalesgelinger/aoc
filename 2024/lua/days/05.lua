@@ -21,9 +21,6 @@ for index, value in ipairs(lines) do
         local producer = {}
         for i, v in ipairs(producerRaw) do
             producer[v] = i
-            if i == #producerRaw // 2 + 1 then
-                producer.middle = v
-            end
         end
         table.insert(producers, producer)
     else
@@ -42,7 +39,8 @@ end
 
 local result = 0
 
-for _, p in pairs(producers) do
+local function checkAndOrder(p)
+    local middle = 0
     for k, v in pairs(p) do
         local order = orders[tostring(k)]
 
@@ -52,15 +50,33 @@ for _, p in pairs(producers) do
 
         for _, o in ipairs(order) do
             if p[o] ~= nil and tonumber(v) > p[o] then
-                goto continue
+                p[k], p[o] = p[o], p[k]
+                checkAndOrder(p)
+                return false
             end
         end
 
         ::inner::
     end
-    result = result + p.middle
+    return true
+end
 
-    ::continue::
+local function count_keys(t)
+    local count = 0
+    for k, v in pairs(t) do
+        count = count + 1
+    end
+    return count
+end
+
+for _, p in pairs(producers) do
+    if not checkAndOrder(p) then
+        for k, v in pairs(p) do
+            if v == count_keys(p) // 2 + 1 then
+                result = result + k
+            end
+        end
+    end
 end
 
 print(result)
